@@ -35,7 +35,7 @@ class CalendarsController < ApplicationController
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
       wday_num = Date.today.wday + x
-      #Date.today.wdayを利用して添字となる数値を得る.1回処理を繰り返す度に1ずつ数字を増やします
+      #Date.today.wdayを利用して添字となる数値を得る.1回処理を繰り返す度に1ずつ数字を増やします.
       
       #もしもwday_numが7以上であれば、7を引く
       if wday_num >= 7
