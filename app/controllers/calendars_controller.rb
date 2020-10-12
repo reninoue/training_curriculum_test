@@ -15,7 +15,7 @@ class CalendarsController < ApplicationController
   private
 
   def plan_params
-    params.require(:calendars).permit(:date, :plan)
+    params.require(:plan).permit(:date, :plan)
   end
 
   def get_week
@@ -34,9 +34,23 @@ class CalendarsController < ApplicationController
       plan = plans.map do |plan|
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
-      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans}
+
+      wday_num = Date.today.wday + x
+      #Date.today.wdayを利用して添字となる数値を得る.1回処理を繰り返す度に1ずつ数字を増やします.
+      
+      #もしもwday_numが7以上であれば、7を引く
+      if wday_num >= 7
+        wday_num = wday_num - 7
+      end
+      days = { month: (@todays_date + x).month, date: (@todays_date+x).day, plans: today_plans, wday: wdays[wday_num]}
       @week_days.push(days)
     end
 
   end
 end
+
+
+# コントローラーからビューにデータを渡す方法
+# 配列の中の値を数字で取り出せること　 wdays　wday_num
+# 添字は０からスタート
+# ビューに渡したデータをどうやって表示する？
